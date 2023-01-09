@@ -1,0 +1,28 @@
+.header {
+  display: flex;
+  justify-content: space-around;
+  align-items: center;
+  background-color: black;
+  color: white;
+  padding: 15px;
+}
+.navbar {
+  margin-bottom: 0;
+}
+.navbar > li {
+  list-style-type: none;
+  display: inline-block;
+  margin: 0 20px;
+  font-size: 1.1rem;
+  font-weight: bold;
+}
+.navbarLink {
+  text-decoration: none;
+  color: white;
+}
+.navbarLink:hover {
+  color: cornsilk;
+}
+.navbar .active {
+  color: aquamarine;
+}
