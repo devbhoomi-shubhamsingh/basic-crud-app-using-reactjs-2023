@@ -2,10 +2,12 @@ import React, { useEffect, useState } from "react";
 import AddNewEmployee from "./AddNewEmployee";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
+import UpdateEmployeeDetails from "./UpdateEmployeeDetails";
 
 const EmployeesList = () => {
   const [employeesList, setEmployeesList] = useState([]);
-  console.log("employeesList", employeesList);
+  const [editMode, setEditMode] = useState(false);
+  const [editFormData, setEditFormData] = useState({});
 
   // Fething employees from the local storage.
   useEffect(() => {
@@ -20,9 +22,8 @@ const EmployeesList = () => {
   }, [employeesList]);
 
   // This method is used to insert new employee in the employee records.
-  const addNewEmployee = (employeeData) => {
+  const addNewEmployee = (employeeData) =>
     setEmployeesList([...employeesList, employeeData]);
-  };
 
   // This method is used to delete existing employee from the record based on employee id.
   const deleteEmployee = (empId, empName) => {
@@ -38,12 +39,28 @@ const EmployeesList = () => {
     }, 200);
   };
 
+  // This method is used to update existing employee details.
+  const updateExistingEmployee = (employeeData) => {
+    console.log("employeeData == updated", employeeData);
+    console.log("employeesList ===== completedata", employeesList);
+
+    // alert("Employee's details updated successfully");
+    // setEditMode(false);
+  };
+
   return (
     <>
       <div className="empSection">
         <div className="row">
           <div className="col col-md-4">
-            <AddNewEmployee addNewEmployee={addNewEmployee} />
+            {editMode ? (
+              <UpdateEmployeeDetails
+                updateExistingEmployee={updateExistingEmployee}
+                empData={editFormData}
+              />
+            ) : (
+              <AddNewEmployee addNewEmployee={addNewEmployee} />
+            )}
           </div>
           <div className="col col-md-8">
             <div className="employeesList">
@@ -83,7 +100,13 @@ const EmployeesList = () => {
                               <td>{emp.empEmailAddress}</td>
                               <td>{emp.empMobileNo}</td>
                               <td>
-                                <button className="btn btn-warning">
+                                <button
+                                  className="btn btn-warning"
+                                  onClick={() => {
+                                    setEditMode(true);
+                                    setEditFormData(emp);
+                                  }}
+                                >
                                   Edit
                                 </button>
                                 <button
