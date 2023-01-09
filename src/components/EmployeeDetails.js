@@ -16,7 +16,7 @@ const EmployeeDetails = () => {
   return (
     <div className="empCompleteDetails">
       <h3 className="text-center text-danger my-3">
-        Employee Complete Details
+        {empName ? empName : "Employee"} Complete Details
       </h3>
       <section>
         <Table responsive bordered className="mx-auto" style={{ width: "40%" }}>

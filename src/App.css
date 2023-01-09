@@ -1,13 +1,27 @@
+.App {
+  height: 100vh;
+}
 .empSection {
   margin: 20px;
+  height: auto;
 }
 .addNewEmployee h3,
 .employeesList h3 {
   text-align: center;
   text-decoration: underline;
-  color: rgb(98, 21, 240);
+  color: rgb(57, 202, 202);
   font-weight: bold;
 }
 .addNewEmployee .submit-btn {
   text-align: center;
+}
+.table td,
+.table th {
+  word-break: break-word;
+}
+.edit-btn {
+  margin-right: 10px;
+}
+.empCompleteDetails {
+  height: 75vh;
 }

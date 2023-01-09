@@ -7,6 +7,7 @@ import EmployeesList from "./components/EmployeesList";
 import AddNewEmployee from "./components/AddNewEmployee";
 import UpdateEmployeeDetails from "./components/UpdateEmployeeDetails";
 import EmployeeDetails from "./components/EmployeeDetails";
+import { ToastContainer } from "react-toastify";
 
 function App() {
   return (
@@ -20,6 +21,7 @@ function App() {
         <Route path="*" element={<PageNotFound />} />
       </Routes>
       <Footer />
+      <ToastContainer />
     </div>
   );
 }

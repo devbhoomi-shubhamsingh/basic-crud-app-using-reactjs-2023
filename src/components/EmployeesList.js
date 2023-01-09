@@ -3,6 +3,7 @@ import AddNewEmployee from "./AddNewEmployee";
 import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import UpdateEmployeeDetails from "./UpdateEmployeeDetails";
+import { toast } from "react-toastify";
 
 const EmployeesList = () => {
   const [employeesList, setEmployeesList] = useState([]);
@@ -22,8 +23,15 @@ const EmployeesList = () => {
   }, [employeesList]);
 
   // This method is used to insert new employee in the employee records.
-  const addNewEmployee = (employeeData) =>
+
+  const addNewEmployee = (employeeData) => {
     setEmployeesList([...employeesList, employeeData]);
+    setTimeout(() => {
+      toast.success("Employee Created Successfully", {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }, 300);
+  };
 
   // This method is used to delete existing employee from the record based on employee id.
   const deleteEmployee = (empId, empName) => {
@@ -32,11 +40,15 @@ const EmployeesList = () => {
       existingEmployees?.length > 0 &&
         existingEmployees.filter((emp) => emp.empId !== empId)
     );
+
     setTimeout(() => {
-      alert(
-        `Employee with id ${empId} and name ${empName} deleted successfully`
+      toast.success(
+        `Employee with id ${empId} and name ${empName} deleted successfully`,
+        {
+          position: toast.POSITION.TOP_RIGHT,
+        }
       );
-    }, 200);
+    }, 300);
   };
 
   // This method is used to update existing employee details.
@@ -52,7 +64,7 @@ const EmployeesList = () => {
     <>
       <div className="empSection">
         <div className="row">
-          <div className="col col-md-4">
+          <div className="col col-lg-4  col-sm-12">
             {editMode ? (
               <UpdateEmployeeDetails
                 updateExistingEmployee={updateExistingEmployee}
@@ -62,7 +74,7 @@ const EmployeesList = () => {
               <AddNewEmployee addNewEmployee={addNewEmployee} />
             )}
           </div>
-          <div className="col col-md-8">
+          <div className="col col-lg-8  col-sm-12">
             <div className="employeesList">
               <h3>Employees List</h3>
               <section className="empListSection mt-4">
@@ -80,13 +92,16 @@ const EmployeesList = () => {
                         <th className="text-center">Actions</th>
                       </tr>
                     </thead>
-                    <tbody>
+                    <tbody className="table-body">
                       {employeesList?.length > 0 &&
                         employeesList.map((emp, index) => {
                           return (
                             <tr key={emp.empId}>
-                              <td>{index + 1}</td>
-                              <td title="View Complete Details">
+                              <td style={{ width: "5%" }}>{index + 1}</td>
+                              <td
+                                style={{ width: "20%" }}
+                                title="View Complete Details"
+                              >
                                 <Link
                                   to={`/viewEmployee/${emp.empId}`}
                                   state={emp}
@@ -94,14 +109,18 @@ const EmployeesList = () => {
                                   {emp.empId}
                                 </Link>
                               </td>
-                              <td>{emp.empName}</td>
+                              <td style={{ width: "15%" }}>{emp.empName}</td>
                               {/* <td>{emp.empFatherName}</td> */}
                               {/* <td>{emp.empDob}</td> */}
-                              <td>{emp.empEmailAddress}</td>
-                              <td>{emp.empMobileNo}</td>
-                              <td>
+                              <td style={{ width: "20%" }}>
+                                {emp.empEmailAddress}
+                              </td>
+                              <td style={{ width: "20%" }}>
+                                {emp.empMobileNo}
+                              </td>
+                              <td style={{ width: "20%" }}>
                                 <button
-                                  className="btn btn-warning"
+                                  className="btn btn-warning edit-btn"
                                   onClick={() => {
                                     setEditMode(true);
                                     setEditFormData(emp);
@@ -110,7 +129,7 @@ const EmployeesList = () => {
                                   Edit
                                 </button>
                                 <button
-                                  className="btn btn-danger mx-2"
+                                  className="btn btn-danger"
                                   onClick={() =>
                                     deleteEmployee(emp.empId, emp.empName)
                                   }
