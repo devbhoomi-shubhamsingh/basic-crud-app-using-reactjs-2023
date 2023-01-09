@@ -9,7 +9,7 @@ const EmployeesList = () => {
   const [editMode, setEditMode] = useState(false);
   const [editFormData, setEditFormData] = useState({});
 
-  // Fething employees from the local storage.
+  // Fetching employees from the local storage.
   useEffect(() => {
     if (localStorage.getItem("employeesData") !== null) {
       setEmployeesList(JSON.parse(localStorage.getItem("employeesData")));
