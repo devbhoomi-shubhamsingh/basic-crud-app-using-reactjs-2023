@@ -1,7 +1,8 @@
 .empSection {
   margin: 20px;
 }
-.addNewEmployee h3, .employeesList h3 {
+.addNewEmployee h3,
+.employeesList h3 {
   text-align: center;
   text-decoration: underline;
   color: rgb(98, 21, 240);

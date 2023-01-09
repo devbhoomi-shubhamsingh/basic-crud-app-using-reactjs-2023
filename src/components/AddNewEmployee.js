@@ -14,8 +14,6 @@ const AddNewEmployee = ({ addNewEmployee }) => {
   });
 
   const handleChange = (event) => {
-    // console.log("event.target.name", event.target.name);
-    // console.log("event.target.value", event.target.value);
     setEmployeeData({
       ...employeeData,
       [event.target.name]: event.target.value,
