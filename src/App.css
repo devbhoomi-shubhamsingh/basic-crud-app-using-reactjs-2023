@@ -25,3 +25,7 @@
 .empCompleteDetails {
   height: 75vh;
 }
+.form-error-msg {
+  font-weight: 500;
+  margin-left: 10px;
+}

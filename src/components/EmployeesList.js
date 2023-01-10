@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import UpdateEmployeeDetails from "./UpdateEmployeeDetails";
 import { toast } from "react-toastify";
+// ========================================================================
 
 const EmployeesList = () => {
   const [employeesList, setEmployeesList] = useState([]);
@@ -26,6 +27,7 @@ const EmployeesList = () => {
 
   const addNewEmployee = (employeeData) => {
     setEmployeesList([...employeesList, employeeData]);
+    // Employee created toast message
     setTimeout(() => {
       toast.success("Employee Created Successfully", {
         position: toast.POSITION.TOP_RIGHT,
@@ -40,7 +42,7 @@ const EmployeesList = () => {
       existingEmployees?.length > 0 &&
         existingEmployees.filter((emp) => emp.empId !== empId)
     );
-
+    // Delete Toast Message
     setTimeout(() => {
       toast.success(
         `Employee with id ${empId} and name ${empName} deleted successfully`,
@@ -64,7 +66,7 @@ const EmployeesList = () => {
     <>
       <div className="empSection">
         <div className="row">
-          <div className="col col-lg-4  col-sm-12">
+          <div className="col-12 col-lg-4">
             {editMode ? (
               <UpdateEmployeeDetails
                 updateExistingEmployee={updateExistingEmployee}
@@ -74,7 +76,7 @@ const EmployeesList = () => {
               <AddNewEmployee addNewEmployee={addNewEmployee} />
             )}
           </div>
-          <div className="col col-lg-8  col-sm-12">
+          <div className="col-12 col-lg-8">
             <div className="employeesList">
               <h3>Employees List</h3>
               <section className="empListSection mt-4">

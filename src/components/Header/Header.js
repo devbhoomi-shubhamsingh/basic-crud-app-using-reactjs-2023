@@ -10,18 +10,6 @@ const Header = () => {
           Employees Management App 2023
         </NavLink>
       </h4>
-      {/* <ul className="navbar">
-        <li>
-          <NavLink className="navbarLink" to="/">
-            View All Employees
-          </NavLink>
-        </li>
-        <li>
-          <NavLink className="navbarLink" to="/addNewEmployee">
-            Add New Employee
-          </NavLink>
-        </li>
-      </ul> */}
     </div>
   );
 };
