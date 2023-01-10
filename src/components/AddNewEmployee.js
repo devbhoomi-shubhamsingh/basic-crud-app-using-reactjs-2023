@@ -2,6 +2,7 @@ import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
 import { v4 as uuidv4 } from "uuid";
+import { validateEmployeeForm } from "../utils/FormValidations";
 // ================================================================================
 
 const AddNewEmployee = ({ addNewEmployee }) => {
@@ -32,7 +33,7 @@ const AddNewEmployee = ({ addNewEmployee }) => {
   }, [formErrors]);
 
   useEffect(() => {
-    isSubmit && setFormErrors(validateAddEmployeeForm(employeeData));
+    isSubmit && setFormErrors(validateEmployeeForm(employeeData));
   }, [employeeData]);
 
   const handleChange = (event) => {
@@ -43,43 +44,10 @@ const AddNewEmployee = ({ addNewEmployee }) => {
     });
   };
 
-  // This method is used to collecting data from the form and send to add new employee function.
   const createNewEmployee = (e) => {
     e.preventDefault();
-    setFormErrors(validateAddEmployeeForm(employeeData));
+    setFormErrors(validateEmployeeForm(employeeData));
     setIsSubmit(true);
-  };
-
-  //This method is used to validate the add employee form
-  const validateAddEmployeeForm = (values) => {
-    const errors = {};
-    const emailRegex = /^[\w-\.]+@([\w-]+\.)+[\w-]{2,4}$/i;
-    const indianMobileRegex = /^[6-9]\d{9}$/i;
-
-    if (!values.empName) errors.empName = "Name is required";
-    else if (values.empName.length < 2)
-      errors.empName = "Name cannot be less than 2 characters.";
-    else if (values.empName.length > 30)
-      errors.empName = "Name cannot be more than 30 characters.";
-
-    if (!values.empFatherName) errors.empFatherName = "Father Name is required";
-    else if (values.empFatherName.length < 2)
-      errors.empFatherName = "Father Name cannot be less than 2 characters.";
-    else if (values.empFatherName.length > 30)
-      errors.empFatherName = "Father Name cannot be more than 30 characters.";
-
-    if (!values.empDob) errors.empDob = "Date of Birth is required";
-
-    if (!values.empEmailAddress)
-      errors.empEmailAddress = "Email Address is required";
-    else if (!emailRegex.test(values.empEmailAddress))
-      errors.empEmailAddress = "Email Address is invalid";
-
-    if (!values.empMobileNo) errors.empMobileNo = "Mobile Number is required";
-    else if (!indianMobileRegex.test(values.empMobileNo))
-      errors.empMobileNo = "This is not a valid indian mobile number";
-
-    return errors;
   };
 
   return (

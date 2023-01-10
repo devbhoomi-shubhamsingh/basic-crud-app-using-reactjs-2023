@@ -4,6 +4,7 @@ import Table from "react-bootstrap/Table";
 import { Link } from "react-router-dom";
 import UpdateEmployeeDetails from "./UpdateEmployeeDetails";
 import { toast } from "react-toastify";
+import { confirmAlert } from "react-confirm-alert";
 // ========================================================================
 
 const EmployeesList = () => {
@@ -37,29 +38,53 @@ const EmployeesList = () => {
 
   // This method is used to delete existing employee from the record based on employee id.
   const deleteEmployee = (empId, empName) => {
-    const existingEmployees = employeesList;
-    setEmployeesList(
-      existingEmployees?.length > 0 &&
-        existingEmployees.filter((emp) => emp.empId !== empId)
-    );
-    // Delete Toast Message
-    setTimeout(() => {
-      toast.success(
-        `Employee with id ${empId} and name ${empName} deleted successfully`,
+    // Confirm Delete Popup
+    confirmAlert({
+      title: "Confirm to delete",
+      message: "Are you sure you want to delete this record?",
+      buttons: [
         {
-          position: toast.POSITION.TOP_RIGHT,
-        }
-      );
-    }, 300);
+          label: "Yes",
+          onClick: () => {
+            const existingEmployees = employeesList;
+            setEmployeesList(
+              existingEmployees?.length > 0 &&
+                existingEmployees.filter((emp) => emp.empId !== empId)
+            );
+            // Delete Toast Message
+            setTimeout(() => {
+              toast.success(
+                `Employee with id ${empId} and name ${empName} deleted successfully`,
+                {
+                  position: toast.POSITION.TOP_RIGHT,
+                }
+              );
+            }, 300);
+          },
+        },
+        {
+          label: "No",
+          onClick: () => {},
+        },
+      ],
+    });
   };
 
   // This method is used to update existing employee details.
   const updateExistingEmployee = (employeeData) => {
-    console.log("employeeData == updated", employeeData);
-    console.log("employeesList ===== completedata", employeesList);
+    let existingEmployees = [...employeesList];
+    const editEmployeeIndex = existingEmployees.findIndex(
+      (ele) => ele.empId === employeeData.empId
+    );
+    existingEmployees.splice(editEmployeeIndex, 1, employeeData);
+    setEmployeesList(existingEmployees);
 
-    // alert("Employee's details updated successfully");
-    // setEditMode(false);
+    setTimeout(() => {
+      toast.success(`Employee details updated successfully`, {
+        position: toast.POSITION.TOP_RIGHT,
+      });
+    }, 300);
+    setEditMode(false);
   };
 
   return (
@@ -145,7 +170,7 @@ const EmployeesList = () => {
                     </tbody>
                   </Table>
                 ) : (
-                  <h5 className="text-center mt-5">No Employees Found</h5>
+                  <h5 className="text-center mt-5">No Data Found</h5>
                 )}
               </section>
             </div>

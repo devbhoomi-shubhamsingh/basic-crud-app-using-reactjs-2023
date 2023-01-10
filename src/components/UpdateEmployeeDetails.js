@@ -1,6 +1,7 @@
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import { validateEmployeeForm } from "../utils/FormValidations";
 // ========================================================================
 
 const UpdateEmployeeDetails = ({ updateExistingEmployee, empData }) => {
@@ -13,6 +14,7 @@ const UpdateEmployeeDetails = ({ updateExistingEmployee, empData }) => {
     empMobileNo,
   } = empData;
 
+  // Prefilling Update Employee Form
   const [employeeData, setEmployeeData] = useState({
     empId: empId || "",
     empName: empName || "",
@@ -21,6 +23,27 @@ const UpdateEmployeeDetails = ({ updateExistingEmployee, empData }) => {
     empEmailAddress: empEmailAddress || "",
     empMobileNo: empMobileNo || "",
   });
+
+  const [formErrors, setFormErrors] = useState({});
+  const [isSubmit, setIsSubmit] = useState(false);
+
+  useEffect(() => {
+    if (Object.keys(formErrors).length === 0 && isSubmit) {
+      updateExistingEmployee(employeeData);
+      setEmployeeData({
+        empName: "",
+        empFatherName: "",
+        empDob: "",
+        empEmailAddress: "",
+        empMobileNo: "",
+      });
+      setIsSubmit(false);
+    }
+  }, [formErrors]);
+
+  useEffect(() => {
+    isSubmit && setFormErrors(validateEmployeeForm(employeeData));
+  }, [employeeData]);
 
   const handleChange = (event) => {
     setEmployeeData({
@@ -32,7 +55,8 @@ const UpdateEmployeeDetails = ({ updateExistingEmployee, empData }) => {
   // This method is used to collecting data from the form and send to update employee function.
   const updateEmployee = (e) => {
     e.preventDefault();
-    updateExistingEmployee(employeeData);
+    setFormErrors(validateEmployeeForm(employeeData));
+    setIsSubmit(true);
   };
 
   return (
@@ -49,6 +73,11 @@ const UpdateEmployeeDetails = ({ updateExistingEmployee, empData }) => {
               value={employeeData.empName}
               onChange={(event) => handleChange(event)}
             />
+            {formErrors.empName && (
+              <p className="text-danger form-error-msg ">
+                {formErrors.empName}
+              </p>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Father's Name</Form.Label>
@@ -59,6 +88,11 @@ const UpdateEmployeeDetails = ({ updateExistingEmployee, empData }) => {
               value={employeeData.empFatherName}
               onChange={(event) => handleChange(event)}
             />
+            {formErrors.empFatherName && (
+              <p className="text-danger form-error-msg ">
+                {formErrors.empFatherName}
+              </p>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Date of Birth</Form.Label>
@@ -69,6 +103,9 @@ const UpdateEmployeeDetails = ({ updateExistingEmployee, empData }) => {
               value={employeeData.empDob}
               onChange={(event) => handleChange(event)}
             />
+            {formErrors.empDob && (
+              <p className="text-danger form-error-msg ">{formErrors.empDob}</p>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Email Address</Form.Label>
@@ -79,6 +116,11 @@ const UpdateEmployeeDetails = ({ updateExistingEmployee, empData }) => {
               value={employeeData.empEmailAddress}
               onChange={(event) => handleChange(event)}
             />
+            {formErrors.empEmailAddress && (
+              <p className="text-danger form-error-msg ">
+                {formErrors.empEmailAddress}
+              </p>
+            )}
           </Form.Group>
           <Form.Group className="mb-3">
             <Form.Label>Mobile Number</Form.Label>
@@ -89,6 +131,11 @@ const UpdateEmployeeDetails = ({ updateExistingEmployee, empData }) => {
               value={employeeData.empMobileNo}
               onChange={(event) => handleChange(event)}
             />
+            {formErrors.empMobileNo && (
+              <p className="text-danger form-error-msg ">
+                {formErrors.empMobileNo}
+              </p>
+            )}
           </Form.Group>
 
           <div className="submit-btn">
